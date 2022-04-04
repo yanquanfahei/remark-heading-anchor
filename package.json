@@ -8,6 +8,10 @@
     "dev": "ts-node example/index.ts",
     "build": "tsc && rollup -c"
   },
+  "files": [
+    "dist/*",
+    "*.json"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/yanquanfahei/remark-heading-anchor.git"
