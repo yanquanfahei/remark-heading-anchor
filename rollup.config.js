@@ -1,17 +1,30 @@
 import { defineConfig } from 'rollup'
-import path from 'path';
 import typescript from '@rollup/plugin-typescript'
 import { nodeResolve } from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs'
+import babel from 'rollup-plugin-babel'
+import pkg from './package.json'
 
 export default defineConfig({
   input: 'src/index.ts',
-  output: {
-    file: path.resolve(__dirname,'dist/index.js'),
-    name: 'index.js',
-    format: 'umd'
-  },
+  output: [
+    {
+      name: 'index',
+			file: pkg.browser,
+			format: 'umd'
+    },
+    { file: pkg.main, format: 'cjs' },
+		{ file: pkg.module, format: 'es' }
+  ],
   plugins: [
     nodeResolve(),
+    babel({
+      plugins: [
+        '@babel/plugin-proposal-optional-chaining',
+      ],
+      exclude: 'node_modules/**',
+    }),
+    commonjs(),
     typescript()
   ]
 });
